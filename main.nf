@@ -828,7 +828,7 @@ if (params.pseudo_aligner == 'salmon' && !params.salmon_index) {
  */
 process fastqc {
     tag "$name"
-    label 'process_medium'
+    label 'low_memory'
     publishDir "${params.outdir}/fastqc", mode: 'copy',
         saveAs: { filename -> filename.indexOf(".zip") > 0 ? "zips/$filename" : "$filename" }
 
@@ -843,6 +843,7 @@ process fastqc {
 
     script:
     """
+    echo $name, $reads
     fastqc --quiet --threads $task.cpus $reads
     """
 }
